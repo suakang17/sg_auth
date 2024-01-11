@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/members")
@@ -27,8 +28,10 @@ public class MemberController {
     }
 
     @PostMapping("/signup")
-    public void signUp(@RequestBody MemberRequestDto memberRequestDto) {
+    public ModelAndView signUp(@RequestBody MemberRequestDto memberRequestDto) {
+        log.info("/members/signup called");
         authService.signUp(memberRequestDto);
+        new ModelAndView("member/login");
     }
 
     @GetMapping("/{loginId}")

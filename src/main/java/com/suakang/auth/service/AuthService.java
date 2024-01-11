@@ -37,9 +37,9 @@ public class AuthService {
     private final MemberToResponseConverter converter;
 
     @Transactional
-    public void signUp(MemberRequestDto memberRequestDto) {
+    public Long signUp(MemberRequestDto memberRequestDto) {
 
-        log.info("memberRequestDto= {}", memberRequestDto.toString());
+        log.info("authservice memberRequestDto= {}", memberRequestDto.toString());
         memberRequestDto.encodePassword(passwordEncoder);
         Member newMember = Member.builder()
                 .loginId((memberRequestDto.getLoginId()))
@@ -55,7 +55,9 @@ public class AuthService {
         log.info("password= {}", memberRequestDto.getPassword());
         log.info("genderType={}", memberRequestDto.getGender().getClass());
         authRepository.save(newMember);
-        memberRepository.save(newMember);
+//        memberRepository.save(newMember);
+        log.info("complete save");
+        return newMember.getId();
     }
 
     // login
